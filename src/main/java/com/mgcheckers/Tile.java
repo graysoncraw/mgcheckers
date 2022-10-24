@@ -1,16 +1,20 @@
 package com.mgcheckers;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.*;
+import javafx.scene.shape.*;
 
 public class Tile extends Rectangle {
-    public Tile(boolean light, int x, int y) {
-        setWidth(App.TILE_SIZE);
-        setHeight(App.TILE_SIZE);
 
-        relocate(x * App.TILE_SIZE, y * App.TILE_SIZE);
+    public Tile(boolean dark, int w, int h) {
+        
+        //setWidth, setHeight, and relcate, and setFill are all part of javaFX
+        setWidth(App.tSize);
+        setHeight(App.tSize);
 
-        setFill(light ? Color.valueOf("#feb") : Color.valueOf("#582"));
-}
+        relocate(w * App.tSize, h * App.tSize);
+        
+        //short for if mod 2 (dark), make tile black, otherwise make it the other color
+        setFill(dark ? Color.valueOf("#000000") : Color.valueOf("#CC5500"));
+    }
 }
     
