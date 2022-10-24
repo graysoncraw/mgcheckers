@@ -1,62 +1,77 @@
 package com.mgcheckers;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
+//import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 
-import java.io.IOException;
+//import java.io.IOException;
 
-/**
- * JavaFX App
- */
 public class App extends Application {
 
-    public static final int TILE_SIZE = 100;
-    public static final int WIDTH = 8;
-    public static final int HEIGHT = 8;
+    //initializing tile size, and number of tiles vertically and horizontally
+    public static final int tSize = 100;
+    public static final int width = 8;
+    public static final int height = 8;
 
-    private Tile[][] board = new Tile[WIDTH][HEIGHT];
+    //creates a board with the number of tiles vertically and horizontally
+    private Tile[][] board = new Tile[width][height];
 
+    //creates a javaFX group for the tiles
     private Group tileGroup = new Group();
+    private Group pieceGroup = new Group();
 
-    private Parent createContent() {
+
+    private Parent createWindow() {
         Pane root = new Pane();
-        root.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
-        root.getChildren().addAll(tileGroup);
+        root.setPrefSize(width * tSize, height * tSize);
+        root.getChildren().addAll(tileGroup, pieceGroup);
 
-        for (int y = 0; y < HEIGHT; y++) {
-            for (int x = 0; x < WIDTH; x++) {
-                Tile tile = new Tile((x + y) % 2 == 0, x, y);
-                board[x][y] = tile;
-
+        //a nested for loop to create a Tile object
+        //this will create the board
+        for (int h = 0; h < height; h++) {
+            for (int w = 0; w < width; w++) {
+                Tile tile = new Tile((w + h) % 2 == 0, w, h);
+                board[w][h] = tile;
                 tileGroup.getChildren().add(tile);
-            }}
-            return root;}
-        
-            @Override
-            public void start(Stage primaryStage) throws Exception {
-                Scene scene = new Scene(createContent());
-                primaryStage.setTitle("CheckersApp");
-                primaryStage.setScene(scene);
-                primaryStage.show();
-            }
             
+            Piece piece = null;
 
+                if (h <= 2 && (w + h) % 2 != 0) {
+                    piece = makePiece(Pieces.BLACK, w, h);
+                }
 
-    private static Scene scene;
+                if (h >= 5 && (w + h) % 2 != 0) {
+                    piece = makePiece(Pieces.ORANGE, w, h);
+                }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+                if (piece != null) {
+                    piece.setPiece(piece);
+                    pieceGroup.getChildren().add(piece);
+                }
+            }
+        }
+        return root;
+    }
+            
+    //uses what was just created to fill it into a scene/window
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Scene scene = new Scene(createWindow());
+        primaryStage.setTitle("MG Checkers");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+    private Piece makePiece(Pieces type, int x, int y) {
+        Piece piece = new Piece(type, x, y);
+
+        return piece;
     }
+            
 
     public static void main(String[] args) {
         launch();
