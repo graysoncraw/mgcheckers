@@ -17,4 +17,3 @@ public class Tile extends Rectangle {
         setFill(dark ? Color.valueOf("#000000") : Color.valueOf("#CC5500"));
     }
 }
-    
