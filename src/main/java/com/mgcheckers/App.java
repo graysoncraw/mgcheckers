@@ -1,14 +1,11 @@
 package com.mgcheckers;
 
 import javafx.application.Application;
-//import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
-
-//import java.io.IOException;
 
 public class App extends Application {
 
@@ -95,6 +92,7 @@ public class App extends Application {
 
     private Piece makePiece(Pieces type, int x, int y) {
         Piece piece = new Piece(type, x, y);
+
         piece.setOnMouseReleased(e -> {
             int newX = toBoard(piece.getLayoutX());
             int newY = toBoard(piece.getLayoutY());
@@ -132,8 +130,6 @@ public class App extends Application {
         });
         return piece;
     }
-    
-            
 
     public static void main(String[] args) {
         launch();

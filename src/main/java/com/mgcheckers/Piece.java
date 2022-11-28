@@ -9,6 +9,7 @@ import static com.mgcheckers.App.tSize;
 public class Piece extends StackPane {
 
     private Pieces type;
+
     private double oldX, oldY;
     private double mouseX, mouseY;
 
@@ -31,25 +32,7 @@ public class Piece extends StackPane {
 
         move(x, y);
 
-        // Ellipse eOrange = new Ellipse(tSize * 0.3, tSize * 0.3);
-        // Ellipse eBlack = new Ellipse(tSize * 0.3, tSize * 0.3);
         Ellipse ec = new Ellipse(tSize * 0.3, tSize * 0.3);
-
-
-        // if (type == Pieces.ORANGE){
-        //     eOrange.setFill(Color.valueOf("#CC5500"));
-        //     eOrange.setStroke(Color.BLACK);
-        //     eOrange.setStrokeWidth(tSize * 0.035);
-        //     eOrange.setTranslateX((tSize - tSize * 0.3 * 2) / 2);
-        //     eOrange.setTranslateY((tSize - tSize * 0.3 * 2) / 2);
-        // }
-        // else if (type == Pieces.BLACK){
-        //     eBlack.setFill(Color.valueOf("#000000"));
-        //     eBlack.setStroke(Color.ORANGE);
-        //     eBlack.setStrokeWidth(tSize * 0.035);
-        //     eBlack.setTranslateX((tSize - tSize * 0.3 * 2) / 2);
-        //     eBlack.setTranslateY((tSize - tSize * 0.3 * 2) / 2);
-        // }
         
         ec.setFill(type == Pieces.ORANGE
                 ? Color.valueOf("#CC5500") : Color.valueOf("#000000"));
