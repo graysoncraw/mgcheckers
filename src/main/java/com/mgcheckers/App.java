@@ -13,7 +13,7 @@ import javafx.scene.layout.Pane;
 public class App extends Application {
 
     //initializing tile size, and number of tiles vertically and horizontally
-    public static final int tSize = 100;
+    public static final int tSize = 80;
     public static final int width = 8;
     public static final int height = 8;
 
@@ -49,7 +49,7 @@ public class App extends Application {
                 }
 
                 if (piece != null) {
-                    piece.setPiece(piece);
+                    tile.setPiece(piece);
                     pieceGroup.getChildren().add(piece);
                 }
             }

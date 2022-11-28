@@ -10,20 +10,9 @@ public class Piece extends StackPane {
 
     private Pieces type;
     private double oldX, oldY;
-    private Piece piece;
     private double mouseX, mouseY;
 
-    public boolean hasPiece() {
-        return piece != null;
-    }
 
-    public Piece getPiece() {
-        return piece;
-    }
-
-    public void setPiece(Piece piece) {
-        this.piece = piece;
-    }
     //
     public Pieces getType() {
         return type;
