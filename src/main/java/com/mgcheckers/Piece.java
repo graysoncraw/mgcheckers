@@ -11,6 +11,7 @@ public class Piece extends StackPane {
     private Pieces type;
     private double oldX, oldY;
     private Piece piece;
+    private double mouseX, mouseY;
 
     public boolean hasPiece() {
         return piece != null;
@@ -43,7 +44,7 @@ public class Piece extends StackPane {
 
         // Ellipse eOrange = new Ellipse(tSize * 0.3, tSize * 0.3);
         // Ellipse eBlack = new Ellipse(tSize * 0.3, tSize * 0.3);
-        Ellipse e = new Ellipse(tSize * 0.3, tSize * 0.3);
+        Ellipse ec = new Ellipse(tSize * 0.3, tSize * 0.3);
 
 
         // if (type == Pieces.ORANGE){
@@ -61,15 +62,24 @@ public class Piece extends StackPane {
         //     eBlack.setTranslateY((tSize - tSize * 0.3 * 2) / 2);
         // }
         
-        e.setFill(type == Pieces.ORANGE
+        ec.setFill(type == Pieces.ORANGE
                 ? Color.valueOf("#CC5500") : Color.valueOf("#000000"));
 
-        e.setStroke(Color.ORANGE);
-        e.setStrokeWidth(tSize * 0.03);
-        e.setTranslateX((tSize - tSize * 0.3 * 2) / 2);
-        e.setTranslateY((tSize - tSize * 0.3 * 2) / 2);
+        ec.setStroke(Color.ORANGE);
+        ec.setStrokeWidth(tSize * 0.03);
+        ec.setTranslateX((tSize - tSize * 0.3 * 2) / 2);
+        ec.setTranslateY((tSize - tSize * 0.3 * 2) / 2);
 
-        getChildren().addAll(e);
+        getChildren().addAll(ec);
+
+        setOnMousePressed(e -> {
+            mouseX = e.getSceneX();
+            mouseY = e.getSceneY();
+        });
+
+        setOnMouseDragged(e -> {
+            relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
+        });
 
     }
     public void move(int x, int y) {
