@@ -8,14 +8,24 @@ import static com.mgcheckers.App.tSize;
 
 public class Piece extends StackPane {
 
-    private Pieces type;
+    private TypeOfPieces type;
 
     private double oldX, oldY;
     private double mouseX, mouseY;
 
 
     //
-    public Pieces getType() {
+    public TypeOfPieces CrownBlack() {
+        this.type = TypeOfPieces.CROWNBLACK;
+        return type;
+    }
+
+    public TypeOfPieces CrownOrange(){
+        this.type = TypeOfPieces.CROWNORANGE;
+        return type;
+    }
+
+    public TypeOfPieces getType() {
         return type;
     }
 
@@ -27,17 +37,27 @@ public class Piece extends StackPane {
         return oldY;
     }
 
-    public Piece(Pieces type, int x, int y) {
+    public Piece(TypeOfPieces type, int x, int y) {
         this.type = type;
 
         move(x, y);
 
         Ellipse ec = new Ellipse(tSize * 0.3, tSize * 0.3);
         
-        ec.setFill(type == Pieces.ORANGE
-                ? Color.valueOf("#CC5500") : Color.valueOf("#000000"));
+        if (type == TypeOfPieces.ORANGE){
+            ec.setFill(Color.valueOf("#FFD700"));
+        }
+        else if(type == TypeOfPieces.BLACK){
+            ec.setFill(Color.valueOf("#000000"));
+        }
+        else if(type == TypeOfPieces.CROWNORANGE){
+            ec.setFill(Color.valueOf("#FF0000"));
+        }
+        else if(type == TypeOfPieces.CROWNBLACK){
+            ec.setFill(Color.valueOf("#808080"));
+        }
 
-        ec.setStroke(Color.ORANGE);
+        ec.setStroke(Color.BLACK);
         ec.setStrokeWidth(tSize * 0.03);
         ec.setTranslateX((tSize - tSize * 0.3 * 2) / 2);
         ec.setTranslateY((tSize - tSize * 0.3 * 2) / 2);
