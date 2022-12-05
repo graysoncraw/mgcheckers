@@ -38,11 +38,11 @@ public class App extends Application {
             Piece piece = null;
 
                 if (h <= 2 && (w + h) % 2 != 0) {
-                    piece = makePiece(Pieces.BLACK, w, h);
+                    piece = makePiece(TypeOfPieces.BLACK, w, h);
                 }
 
                 if (h >= 5 && (w + h) % 2 != 0) {
-                    piece = makePiece(Pieces.ORANGE, w, h);
+                    piece = makePiece(TypeOfPieces.ORANGE, w, h);
                 }
 
                 if (piece != null) {
@@ -62,9 +62,9 @@ public class App extends Application {
         int x0 = toBoard(piece.getOldX());
         int y0 = toBoard(piece.getOldY());
 
-        if (Math.abs(newX - x0) == 1 && newY - y0 == piece.getType().moveDir) {
+        if (Math.abs(newX - x0) == 1 && newY - y0 == piece.getType().moveDir1 || Math.abs(newX - x0) == 1 && newY - y0 == piece.getType().moveDir2) {
             return new ResultOfMove(TypeOfMove.NORMAL);
-        } else if (Math.abs(newX - x0) == 2 && newY - y0 == piece.getType().moveDir * 2) {
+        } else if (Math.abs(newX - x0) == 2 && newY - y0 == piece.getType().moveDir1 * 2 || Math.abs(newX - x0) == 2 && newY - y0 == piece.getType().moveDir2 * 2) {
 
             int x1 = x0 + (newX - x0) / 2;
             int y1 = y0 + (newY - y0) / 2;
@@ -90,7 +90,7 @@ public class App extends Application {
         primaryStage.show();
     }
 
-    private Piece makePiece(Pieces type, int x, int y) {
+    private Piece makePiece(TypeOfPieces type, int x, int y) {
         Piece piece = new Piece(type, x, y);
 
         piece.setOnMouseReleased(e -> {
@@ -113,11 +113,27 @@ public class App extends Application {
                     piece.abortMove();
                     break;
                 case NORMAL:
+                    if(piece.getType() == TypeOfPieces.BLACK){
+                        if(newY == 7){
+                            piece.CrownBlack();
+                        }
+                    }
+                    else if(type == TypeOfPieces.ORANGE){
+                        if(newY == 0){
+                        piece.CrownOrange();
+                        }
+                    }
                     piece.move(newX, newY);
                     board[x0][y0].setPiece(null);
                     board[newX][newY].setPiece(piece);
                     break;
                 case HOP:
+                    if(type == TypeOfPieces.BLACK){
+                        if(newY == 8){piece.CrownBlack();}
+                    }
+                    else if(type == TypeOfPieces.ORANGE){
+                        if(newY == 1){piece.CrownOrange();}
+                    }
                     piece.move(newX, newY);
                     board[x0][y0].setPiece(null);
                     board[newX][newY].setPiece(piece);
