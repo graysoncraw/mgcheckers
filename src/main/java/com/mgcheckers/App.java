@@ -1,7 +1,5 @@
 package com.mgcheckers;
 
-import java.util.List;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,17 +7,23 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class App extends Application {
 
     private Button resetButton;
+    private Label blackCounter;
+    private Label orangeCounter;
+    private TextField blackVal;
+    private TextField orangeVal;
+    public int blackPoint = 0;
+    public int orangePoint = 0;
 
     //initializing tile size, and number of tiles vertically and horizontally
     public static final int tSize = 80;
@@ -39,6 +43,7 @@ public class App extends Application {
         BorderPane border = new BorderPane();
         border.setCenter(addGridPane());
         border.setRight(addVBox());
+        border.setPrefSize(790, 640);
         border.getChildren().addAll(tileGroup, pieceGroup);
         return border;
     }
@@ -79,15 +84,53 @@ public class App extends Application {
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(0));
         vbox.setSpacing(4);
+        blackCounter = new Label("Black Score:");
+        blackVal = new TextField();
+        blackVal.setEditable(false);
+        blackVal.setText("0");
+        orangeCounter = new Label("Orange Score:");
+        orangeVal = new TextField();
+        orangeVal.setEditable(false);
+        orangeVal.setText("0");
         resetButton = new Button("Reset Game");
 
         resetButton.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event) {
-				
+                blackVal.setText("0");
+                blackPoint = 0;
+                orangeVal.setText("0");
+                orangePoint = 0;
+				for(int x=0; x<8; x++){
+                    for(int y=0; y<8; y++){
+                        if(board[x][y].hasPiece()){
+                            Piece piece = board[x][y].getPiece();
+                            board[x][y].setPiece(null);
+                            pieceGroup.getChildren().remove(piece);
+                        }
+                    }
+                }
+                for(int h = 0; h<8; h++){
+                    for(int w=0;w<8;w++){
+                        Piece piece = null;
+
+                if (h <= 2 && (w + h) % 2 != 0) {
+                    piece = makePiece(TypeOfPieces.BLACK, w, h);
+                }
+
+                if (h >= 5 && (w + h) % 2 != 0) {
+                    piece = makePiece(TypeOfPieces.ORANGE, w, h);
+                }
+
+                if (piece != null) {
+                    board[w][h].setPiece(piece);
+                    pieceGroup.getChildren().add(piece);
+                }
+                    }
+                }
 			}
 		});
-        vbox.getChildren().addAll(resetButton);
+        vbox.getChildren().addAll(resetButton, blackCounter, blackVal, orangeCounter, orangeVal);
         return vbox;
 
     }
@@ -168,9 +211,13 @@ public class App extends Application {
                 case HOP:
                     if(type == TypeOfPieces.BLACK){
                         if(newY == 8){piece.CrownBlack();}
+                        blackPoint++;
+                        blackVal.setText(Integer.toString(blackPoint));
                     }
                     else if(type == TypeOfPieces.ORANGE){
                         if(newY == 1){piece.CrownOrange();}
+                        orangePoint++;
+                        orangeVal.setText(Integer.toString(orangePoint));
                     }
                     piece.move(newX, newY);
                     board[x0][y0].setPiece(null);
