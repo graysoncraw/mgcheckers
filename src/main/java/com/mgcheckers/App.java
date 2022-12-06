@@ -1,13 +1,25 @@
 package com.mgcheckers;
 
+import java.util.List;
+
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 public class App extends Application {
+
+    private Button resetButton;
 
     //initializing tile size, and number of tiles vertically and horizontally
     public static final int tSize = 80;
@@ -20,15 +32,24 @@ public class App extends Application {
     //creates a javaFX group for the tiles
     private Group tileGroup = new Group();
     private Group pieceGroup = new Group();
+    
 
 
     private Parent createWindow() {
-        Pane root = new Pane();
-        root.setPrefSize(width * tSize, height * tSize);
-        root.getChildren().addAll(tileGroup, pieceGroup);
-
+        BorderPane border = new BorderPane();
+        border.setCenter(addGridPane());
+        border.setRight(addVBox());
+        border.getChildren().addAll(tileGroup, pieceGroup);
+        return border;
+    }
         //a nested for loop to create a Tile object
         //this will create the board
+        public GridPane addGridPane() {
+            GridPane grid = new GridPane();
+            grid.setHgap(0);
+            grid.setVgap(0);
+            grid.setPadding(new Insets(0, 0, 0, 0));
+        
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {
                 Tile tile = new Tile((w + h) % 2 == 0, w, h);
@@ -51,7 +72,24 @@ public class App extends Application {
                 }
             }
         }
-        return root;
+        return grid;
+    }
+
+    public VBox addVBox() {
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(0));
+        vbox.setSpacing(4);
+        resetButton = new Button("Reset Game");
+
+        resetButton.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent event) {
+				
+			}
+		});
+        vbox.getChildren().addAll(resetButton);
+        return vbox;
+
     }
 
     private ResultOfMove tryMove(Piece piece, int newX, int newY) {
