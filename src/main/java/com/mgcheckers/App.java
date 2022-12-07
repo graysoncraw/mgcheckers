@@ -15,15 +15,23 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import java.sql.*;
+
 public class App extends Application {
 
     private Button resetButton;
+    private Button loginButton;
     private Label blackCounter;
     private Label orangeCounter;
+    private Label usernameLabel;
+    private Label passwordLabel;
     private TextField blackVal;
     private TextField orangeVal;
+    private TextField usernameField;
+    private TextField passwordField;
     public int blackPoint = 0;
     public int orangePoint = 0;
+    public boolean successcheck = false;
 
     //initializing tile size, and number of tiles vertically and horizontally
     public static final int tSize = 80;
@@ -36,7 +44,6 @@ public class App extends Application {
     //creates a javaFX group for the tiles
     private Group tileGroup = new Group();
     private Group pieceGroup = new Group();
-    
 
 
     private Parent createWindow() {
@@ -92,7 +99,57 @@ public class App extends Application {
         orangeVal = new TextField();
         orangeVal.setEditable(false);
         orangeVal.setText("0");
-        resetButton = new Button("Reset Game");
+
+        if (successcheck == false){
+            usernameLabel = new Label("Username:");
+            usernameField = new TextField();
+            usernameField.setEditable(true);
+            passwordLabel = new Label("Password:");
+            passwordField = new TextField();
+            passwordField.setEditable(true);
+            loginButton = new Button("Login");
+            resetButton = new Button("Reset Game");
+            VBox.setMargin(usernameLabel, new Insets(350, 0, 0, 0));
+    
+            loginButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event){
+                    String userName = usernameField.getText();
+                    String password = passwordField.getText();
+                    String dbUserName;
+                    String dbPassword;
+                    try {
+                        String url = "jdbc:mysql://localhost:3306/logininfo";
+                        String uname = "root";
+                        String pword = "Hsjmieemkgiea612&";
+                        Connection conn = DriverManager.getConnection(url, uname, pword);
+                        Statement stmt = conn.createStatement();
+                        //selects all usernames and passwords
+                        ResultSet rs = stmt.executeQuery("SELECT * FROM PASSWORDS;");
+                    //will retrieve usernames and passwords by column one at a time, and 
+                    //check to see if they are equal with what the user has entered
+                    while (rs.next()) {
+                        dbUserName = rs.getString(1);
+                        dbPassword = rs.getString(2);
+                        if (userName.equals(dbUserName)){
+                            if (password.equals(dbPassword)){
+                                successcheck = true;
+                                System.out.println("success");
+                            }
+                        }
+                        if(successcheck == false){
+                            System.out.println("fail");
+                        }
+                    }
+                    conn.close();
+                    stmt.close();
+                    
+                 } catch (SQLException sqlexc) {
+                    sqlexc.printStackTrace();
+                 } 
+                }
+            });
+        }
 
         resetButton.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>(){
 			@Override
@@ -130,7 +187,8 @@ public class App extends Application {
                 }
 			}
 		});
-        vbox.getChildren().addAll(resetButton, blackCounter, blackVal, orangeCounter, orangeVal);
+        vbox.getChildren().addAll(resetButton, blackCounter, blackVal, orangeCounter, orangeVal, 
+        usernameLabel, usernameField, passwordLabel, passwordField, loginButton);
         return vbox;
 
     }
