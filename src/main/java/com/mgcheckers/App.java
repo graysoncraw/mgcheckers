@@ -69,21 +69,7 @@ public class App extends Application {
                 Tile tile = new Tile((w + h) % 2 == 0, w, h);
                 board[w][h] = tile;
                 tileGroup.getChildren().add(tile);
-            
-            Piece piece = null;
-
-                if (h <= 2 && (w + h) % 2 != 0) {
-                    piece = makePiece(TypeOfPieces.BLACK, w, h);
-                }
-
-                if (h >= 5 && (w + h) % 2 != 0) {
-                    piece = makePiece(TypeOfPieces.ORANGE, w, h);
-                }
-
-                if (piece != null) {
-                    tile.setPiece(piece);
-                    pieceGroup.getChildren().add(piece);
-                }
+        
             }
         }
         return grid;
@@ -102,6 +88,7 @@ public class App extends Application {
         orangeVal.setEditable(false);
         orangeVal.setText("0");
 
+        if (successcheck == false){
             usernameLabel = new Label("Username:");
             usernameField = new TextField();
             usernameField.setEditable(true);
@@ -136,6 +123,25 @@ public class App extends Application {
                             if (password.equals(dbPassword)){
                                 successcheck = true;
                                 System.out.println("success");
+                                for (int h = 0; h < 8; h++){
+                                    for (int w = 0; w < 8; w++){
+                                        Piece piece = null;
+
+                                        if (h <= 2 && (w + h) % 2 != 0) {
+                                            piece = makePiece(TypeOfPieces.BLACK, w, h);
+                                        }
+        
+                                        if (h >= 5 && (w + h) % 2 != 0) {
+                                            piece = makePiece(TypeOfPieces.ORANGE, w, h);
+                                        }
+        
+                                        if (piece != null) {
+                                            board[w][h].setPiece(piece);
+                                            pieceGroup.getChildren().add(piece);
+                                        }
+                                    }
+                                }
+
                             }
                         }
                         if(successcheck == false){
@@ -150,6 +156,7 @@ public class App extends Application {
                  } 
                 }
             });
+        }
 
         resetButton.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>(){
 			@Override
