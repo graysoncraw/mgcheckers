@@ -89,7 +89,6 @@ public class App extends Application {
         orangeVal.setEditable(false);
         orangeVal.setText("0");
 
-        if (successcheck == false){
             usernameLabel = new Label("Username:");
             usernameField = new TextField();
             usernameField.setEditable(true);
@@ -141,6 +140,12 @@ public class App extends Application {
                                             board[w][h].setPiece(piece);
                                             pieceGroup.getChildren().add(piece);
                                         }
+                                        usernameLabel.setVisible(false);
+                                        usernameField.setVisible(false);
+                                        passwordField.setVisible(false);
+                                        passwordLabel.setVisible(false);
+                                        loginButton.setVisible(false);
+
                                     }
                                 }
 
@@ -158,7 +163,7 @@ public class App extends Application {
                  } 
                 }
             });
-        }
+        
 
         resetButton.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>(){
 			@Override
