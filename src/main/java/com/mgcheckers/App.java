@@ -14,6 +14,8 @@ import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.*;
+
 
 import java.sql.*;
 
@@ -255,11 +257,14 @@ public class App extends Application {
                     if(piece.getType() == TypeOfPieces.BLACK){
                         if(newY == 7){
                             piece.CrownBlack();
+                            piece.ec.setFill(Color.valueOf("#808080"));
                         }
                     }
                     else if(type == TypeOfPieces.ORANGE){
                         if(newY == 0){
-                        piece.CrownOrange();
+                            piece.CrownOrange();
+                            piece.ec.setFill(Color.valueOf("#FF0000"));
+
                         }
                     }
                     piece.move(newX, newY);

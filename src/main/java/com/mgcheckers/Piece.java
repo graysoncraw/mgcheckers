@@ -13,6 +13,7 @@ public class Piece extends StackPane {
     private double oldX, oldY;
     private double mouseX, mouseY;
 
+    Ellipse ec = null;
 
     //
     public TypeOfPieces CrownBlack() {
@@ -42,19 +43,13 @@ public class Piece extends StackPane {
 
         move(x, y);
 
-        Ellipse ec = new Ellipse(tSize * 0.3, tSize * 0.3);
+        ec = new Ellipse(tSize * 0.3, tSize * 0.3);
         
         if (type == TypeOfPieces.ORANGE){
             ec.setFill(Color.valueOf("#FFD700"));
         }
         else if(type == TypeOfPieces.BLACK){
             ec.setFill(Color.valueOf("#000000"));
-        }
-        else if(type == TypeOfPieces.CROWNORANGE){
-            ec.setFill(Color.valueOf("#FF0000"));
-        }
-        else if(type == TypeOfPieces.CROWNBLACK){
-            ec.setFill(Color.valueOf("#808080"));
         }
 
         ec.setStroke(Color.BLACK);
