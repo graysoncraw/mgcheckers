@@ -273,12 +273,12 @@ public class App extends Application {
                     break;
                 case HOP:
                     if(type == TypeOfPieces.BLACK){
-                        if(newY == 8){piece.CrownBlack();}
+                        if(newY == 7){piece.CrownBlack();}
                         blackPoint++;
                         blackVal.setText(Integer.toString(blackPoint));
                     }
                     else if(type == TypeOfPieces.ORANGE){
-                        if(newY == 1){piece.CrownOrange();}
+                        if(newY == 0){piece.CrownOrange();}
                         orangePoint++;
                         orangeVal.setText(Integer.toString(orangePoint));
                     }
