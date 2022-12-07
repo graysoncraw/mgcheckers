@@ -89,80 +89,80 @@ public class App extends Application {
         orangeVal.setEditable(false);
         orangeVal.setText("0");
 
-            usernameLabel = new Label("Username:");
-            usernameField = new TextField();
-            usernameField.setEditable(true);
-            passwordLabel = new Label("Password:");
-            passwordField = new TextField();
-            passwordField.setEditable(true);
-            loginButton = new Button("Login");
-            resetButton = new Button("Reset Game");
-            victoryLabel = new Label("");
-            VBox.setMargin(usernameLabel, new Insets(350, 0, 0, 0));
-    
-            loginButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event){
-                    String userName = usernameField.getText();
-                    String password = passwordField.getText();
-                    String dbUserName;
-                    String dbPassword;
-                    try {
-                        String url = "jdbc:mysql://localhost:3306/logininfo";
-                        String uname = "root";
-                        String pword = "Hsjmieemkgiea612&";
-                        Connection conn = DriverManager.getConnection(url, uname, pword);
-                        Statement stmt = conn.createStatement();
-                        //selects all usernames and passwords
-                        ResultSet rs = stmt.executeQuery("SELECT * FROM PASSWORDS;");
-                    //will retrieve usernames and passwords by column one at a time, and 
-                    //check to see if they are equal with what the user has entered
-                    while (rs.next()) {
-                        dbUserName = rs.getString(1);
-                        dbPassword = rs.getString(2);
-                        if (userName.equals(dbUserName)){
-                            if (password.equals(dbPassword)){
-                                successcheck = true;
-                                System.out.println("success");
-                                for (int h = 0; h < 8; h++){
-                                    for (int w = 0; w < 8; w++){
-                                        Piece piece = null;
+        usernameLabel = new Label("Username:");
+        usernameField = new TextField();
+        usernameField.setEditable(true);
+        passwordLabel = new Label("Password:");
+        passwordField = new TextField();
+        passwordField.setEditable(true);
+        loginButton = new Button("Login");
+        resetButton = new Button("Reset Game");
+        victoryLabel = new Label("");
+        VBox.setMargin(usernameLabel, new Insets(350, 0, 0, 0));
 
-                                        if (h <= 2 && (w + h) % 2 != 0) {
-                                            piece = makePiece(TypeOfPieces.BLACK, w, h);
-                                        }
-        
-                                        if (h >= 5 && (w + h) % 2 != 0) {
-                                            piece = makePiece(TypeOfPieces.ORANGE, w, h);
-                                        }
-        
-                                        if (piece != null) {
-                                            board[w][h].setPiece(piece);
-                                            pieceGroup.getChildren().add(piece);
-                                        }
-                                        usernameLabel.setVisible(false);
-                                        usernameField.setVisible(false);
-                                        passwordField.setVisible(false);
-                                        passwordLabel.setVisible(false);
-                                        loginButton.setVisible(false);
+        loginButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                String userName = usernameField.getText();
+                String password = passwordField.getText();
+                String dbUserName;
+                String dbPassword;
+                try {
+                    String url = "jdbc:mysql://localhost:3306/logininfo";
+                    String uname = "root";
+                    String pword = "Hsjmieemkgiea612&";
+                    Connection conn = DriverManager.getConnection(url, uname, pword);
+                    Statement stmt = conn.createStatement();
+                    //selects all usernames and passwords
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM PASSWORDS;");
+                //will retrieve usernames and passwords by column one at a time, and 
+                //check to see if they are equal with what the user has entered
+                while (rs.next()) {
+                    dbUserName = rs.getString(1);
+                    dbPassword = rs.getString(2);
+                    if (userName.equals(dbUserName)){
+                        if (password.equals(dbPassword)){
+                            successcheck = true;
+                            System.out.println("success");
+                            for (int h = 0; h < 8; h++){
+                                for (int w = 0; w < 8; w++){
+                                    Piece piece = null;
 
+                                    if (h <= 2 && (w + h) % 2 != 0) {
+                                        piece = makePiece(TypeOfPieces.BLACK, w, h);
                                     }
-                                }
+    
+                                    if (h >= 5 && (w + h) % 2 != 0) {
+                                        piece = makePiece(TypeOfPieces.ORANGE, w, h);
+                                    }
+    
+                                    if (piece != null) {
+                                        board[w][h].setPiece(piece);
+                                        pieceGroup.getChildren().add(piece);
+                                    }
+                                    usernameLabel.setVisible(false);
+                                    usernameField.setVisible(false);
+                                    passwordField.setVisible(false);
+                                    passwordLabel.setVisible(false);
+                                    loginButton.setVisible(false);
 
+                                }
                             }
-                        }
-                        if(successcheck == false){
-                            System.out.println("fail");
+
                         }
                     }
-                    conn.close();
-                    stmt.close();
-                    
-                 } catch (SQLException sqlexc) {
-                    sqlexc.printStackTrace();
-                 } 
+                    if(successcheck == false){
+                        System.out.println("fail");
+                    }
                 }
-            });
+                conn.close();
+                stmt.close();
+                
+                } catch (SQLException sqlexc) {
+                sqlexc.printStackTrace();
+                } 
+            }
+        });
         
 
         resetButton.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>(){
@@ -274,7 +274,7 @@ public class App extends Application {
                             piece.ec.setFill(Color.valueOf("#808080"));
                         }
                     }
-                    else if(type == TypeOfPieces.ORANGE){
+                    else if(piece.getType() == TypeOfPieces.ORANGE){
                         if(newY == 0){
                             piece.CrownOrange();
                             piece.ec.setFill(Color.valueOf("#FF0000"));
