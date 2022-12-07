@@ -173,6 +173,7 @@ public class App extends Application {
                 blackPoint = 0;
                 orangeVal.setText("0");
                 orangePoint = 0;
+                victoryLabel.setText("");
 				for(int x=0; x<8; x++){
                     for(int y=0; y<8; y++){
                         if(board[x][y].hasPiece()){
@@ -290,7 +291,8 @@ public class App extends Application {
                         if(newY == 7){piece.CrownBlack();}
                         blackPoint++;
                         blackVal.setText(Integer.toString(blackPoint));
-                        victoryLabel.setText("Black Player has won!");
+                        if(blackPoint == 12){
+                            victoryLabel.setText("Black Player has won!");}
                     }
                     else if(type == TypeOfPieces.ORANGE){
                         if(newY == 0){piece.CrownOrange();}
