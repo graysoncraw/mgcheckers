@@ -100,7 +100,6 @@ public class App extends Application {
         orangeVal.setEditable(false);
         orangeVal.setText("0");
 
-        if (successcheck == false){
             usernameLabel = new Label("Username:");
             usernameField = new TextField();
             usernameField.setEditable(true);
@@ -149,11 +148,11 @@ public class App extends Application {
                  } 
                 }
             });
-        }
 
         resetButton.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event) {
+                if(successcheck == true){
                 blackVal.setText("0");
                 blackPoint = 0;
                 orangeVal.setText("0");
@@ -186,6 +185,7 @@ public class App extends Application {
                     }
                 }
 			}
+        }
 		});
         vbox.getChildren().addAll(resetButton, blackCounter, blackVal, orangeCounter, orangeVal, 
         usernameLabel, usernameField, passwordLabel, passwordField, loginButton);
