@@ -31,6 +31,7 @@ public class App extends Application {
     private TextField orangeVal;
     private TextField usernameField;
     private TextField passwordField;
+    private Label victoryLabel;
     public int blackPoint = 0;
     public int orangePoint = 0;
     public boolean successcheck = false;
@@ -97,6 +98,7 @@ public class App extends Application {
             passwordField.setEditable(true);
             loginButton = new Button("Login");
             resetButton = new Button("Reset Game");
+            victoryLabel = new Label("");
             VBox.setMargin(usernameLabel, new Insets(350, 0, 0, 0));
     
             loginButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -197,7 +199,7 @@ public class App extends Application {
         }
 		});
         vbox.getChildren().addAll(resetButton, blackCounter, blackVal, orangeCounter, orangeVal, 
-        usernameLabel, usernameField, passwordLabel, passwordField, loginButton);
+        victoryLabel, usernameLabel, usernameField, passwordLabel, passwordField, loginButton);
         return vbox;
 
     }
@@ -283,11 +285,15 @@ public class App extends Application {
                         if(newY == 7){piece.CrownBlack();}
                         blackPoint++;
                         blackVal.setText(Integer.toString(blackPoint));
+                        victoryLabel.setText("Black Player has won!");
                     }
                     else if(type == TypeOfPieces.ORANGE){
                         if(newY == 0){piece.CrownOrange();}
                         orangePoint++;
                         orangeVal.setText(Integer.toString(orangePoint));
+                        if(orangePoint == 12){
+                            victoryLabel.setText("Gold player has won!");
+                        }
                     }
                     piece.move(newX, newY);
                     board[x0][y0].setPiece(null);
