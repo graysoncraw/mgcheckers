@@ -225,7 +225,8 @@ public class App extends Application {
             int x1 = x0 + (newX - x0) / 2;
             int y1 = y0 + (newY - y0) / 2;
 
-            if (board[x1][y1].hasPiece() && board[x1][y1].getPiece().getType() != piece.getType()) {
+            if (board[x1][y1].hasPiece() && ((board[x1][y1].getPiece().getType() == TypeOfPieces.ORANGE || board[x1][y1].getPiece().getType() == TypeOfPieces.CROWNORANGE) && (piece.getType() == TypeOfPieces.BLACK || piece.getType() == TypeOfPieces.CROWNBLACK)) || 
+            ((board[x1][y1].getPiece().getType() == TypeOfPieces.BLACK || board[x1][y1].getPiece().getType() == TypeOfPieces.CROWNBLACK) && (piece.getType() == TypeOfPieces.ORANGE || piece.getType() == TypeOfPieces.CROWNORANGE))) {
                 return new ResultOfMove(TypeOfMove.HOP, board[x1][y1].getPiece());
             }
         }
