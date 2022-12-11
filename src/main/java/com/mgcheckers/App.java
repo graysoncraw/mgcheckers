@@ -307,7 +307,7 @@ public class App extends Application {
                         orangePoint++;
                         orangeVal.setText(Integer.toString(orangePoint));
                         if(orangePoint == 12){
-                            victoryLabel.setText("Gold player has won!");
+                            victoryLabel.setText("Orange player has won!");
                         }
                     }
                     piece.move(newX, newY);
