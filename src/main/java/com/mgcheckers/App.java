@@ -289,14 +289,21 @@ public class App extends Application {
                     break;
                 case HOP:
                     if(type == TypeOfPieces.BLACK){
-                        if(newY == 7){piece.CrownBlack();}
+                        if(newY == 7){
+                            piece.CrownBlack();
+                            piece.ec.setFill(Color.valueOf("#808080"));
+                        }
                         blackPoint++;
                         blackVal.setText(Integer.toString(blackPoint));
                         if(blackPoint == 12){
                             victoryLabel.setText("Black Player has won!");}
                     }
                     else if(type == TypeOfPieces.ORANGE){
-                        if(newY == 0){piece.CrownOrange();}
+                        if(newY == 0){
+                            piece.CrownOrange();
+                            piece.ec.setFill(Color.valueOf("#FF0000"));
+                        }
+                        
                         orangePoint++;
                         orangeVal.setText(Integer.toString(orangePoint));
                         if(orangePoint == 12){
